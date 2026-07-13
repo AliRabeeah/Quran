@@ -15,6 +15,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
     private lateinit var tvPlayerTitle: TextView
     private lateinit var btnPlayerToggle: ImageButton
     private lateinit var seekBar: SeekBar
+    private lateinit var btnThemeToggle: ImageButton
 
     private var playbackService: PlaybackService? = null
     private var serviceBound = false
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        applyStoredTheme()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -67,6 +70,9 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
         tvPlayerTitle = findViewById(R.id.tvPlayerTitle)
         btnPlayerToggle = findViewById(R.id.btnPlayerToggle)
         seekBar = findViewById(R.id.seekBar)
+        btnThemeToggle = findViewById(R.id.btnThemeToggle)
+        btnThemeToggle.setOnClickListener { toggleTheme() }
+        updateThemeIcon()
 
         downloadHelper = DownloadHelper(this)
         downloadHelper.setListener(this)
@@ -132,6 +138,7 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
             }
         }
     }
+
     private fun playSurah(surah: Surah) {
         playbackService?.play(surah)
         adapter.currentlyPlaying = surah.number
@@ -152,7 +159,7 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
     private fun updatePlayerUi(isPlaying: Boolean, surah: Surah?) {
         adapter.currentlyPlaying = if (isPlaying) surah?.number else null
         btnPlayerToggle.setImageResource(
-            if (isPlaying) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play
+            if (isPlaying) R.drawable.ic_pause_white else R.drawable.ic_play_white
         )
     }
 
@@ -169,6 +176,26 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
             }
         }
         handler.post(runnable)
+    }
+
+    private fun prefs() = getSharedPreferences("settings", MODE_PRIVATE)
+
+    private fun applyStoredTheme() {
+        val isDark = prefs().getBoolean("dark_mode", false)
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
+    private fun toggleTheme() {
+        val isDark = prefs().getBoolean("dark_mode", false)
+        prefs().edit().putBoolean("dark_mode", !isDark).apply()
+        recreate()
+    }
+
+    private fun updateThemeIcon() {
+        val isDark = prefs().getBoolean("dark_mode", false)
+        btnThemeToggle.setImageResource(if (isDark) R.drawable.ic_sun else R.drawable.ic_moon)
     }
 
     override fun onDestroy() {
