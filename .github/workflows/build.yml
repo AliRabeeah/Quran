@@ -19,17 +19,25 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.4'
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.4'
+      - name: Build debug APK
+        run: gradle assembleDebug --stacktrace
+
+      - name: List all generated files (debug)
+        if: always()
+        run: find . -name "*.apk" -o -name "*.aab" | tee found-files.txt
 
       - name: Upload APK
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            **/*.apk
+            found-files.txt
+          if-no-files-found: warn
