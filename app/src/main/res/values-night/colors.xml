@@ -1,0 +1,9 @@
+<resources>
+    <color name="background">#10201A</color>
+    <color name="cardBackground">#1C2C24</color>
+    <color name="primary">#0B4F3C</color>
+    <color name="primaryText">#F0EAD6</color>
+    <color name="secondaryText">#9FB0A4</color>
+    <color name="gold">#D4AF37</color>
+    <color name="goldLight">#E8C468</color>
+</resources>
