@@ -34,6 +34,15 @@
                 android:textColor="@color/primaryText" />
 
             <ImageButton
+                android:id="@+id/btnFavoritesFilter"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_star_outline"
+                android:contentDescription="المفضلة" />
+
+            <ImageButton
                 android:id="@+id/btnThemeToggle"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -43,19 +52,32 @@
 
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="ابحث عن سورة..."
+            android:textColorHint="@color/secondaryText"
+            android:textColor="@color/primaryText"
+            android:background="@drawable/bg_search_box"
+            android:padding="12dp"
+            android:inputType="text"
+            android:singleLine="true" />
+
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:textColor="@color/secondaryText" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDownloadAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:text="تحميل الكل"
             android:textColor="#FFFFFF"
             app:backgroundTint="@color/primary"
