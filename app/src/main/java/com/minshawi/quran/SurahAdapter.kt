@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class SurahAdapter(
@@ -51,6 +52,9 @@ class SurahAdapter(
         val isPlaying = currentlyPlaying == surah.number
         holder.playBtn.setImageResource(
             if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+        )
+        holder.name.setTextColor(
+            ContextCompat.getColor(context, if (isPlaying) R.color.primary else R.color.primaryText)
         )
 
         holder.downloadBtn.setOnClickListener {
