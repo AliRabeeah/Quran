@@ -26,12 +26,20 @@
         android:textSize="16sp"
         android:layout_marginStart="8dp" />
 
+    <ImageButton
+        android:id="@+id/btnFavorite"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_star_outline"
+        android:contentDescription="مفضلة" />
+
     <ProgressBar
         android:id="@+id/progressDownload"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:visibility="gone"
-        android:layout_marginEnd="6dp"
+        android:layout_marginStart="4dp"
         android:indeterminateTint="@color/primary" />
 
     <ImageButton
