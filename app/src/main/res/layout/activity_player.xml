@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="24dp">
+
+    <ImageButton
+        android:id="@+id/btnBackFull"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_back"
+        android:contentDescription="رجوع" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="230dp"
+        android:layout_height="230dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_album_art" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tvPlayerScreenTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvPlayerScreenArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#B3B3B3"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginTop="4dp" />
+
+    <SeekBar
+        android:id="@+id/seekBarFull"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:progressTint="#1DB954"
+        android:thumbTint="#1DB954" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#B3B3B3"
+            android:textSize="12sp"
+            android:text="0:00" />
+
+        <TextView
+            android:id="@+id/tvTotalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#B3B3B3"
+            android:textSize="12sp"
+            android:text="0:00" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="24dp">
+
+        <ImageButton
+            android:id="@+id/btnPrevFull"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_previous"
+            android:contentDescription="السابق" />
+
+        <ImageButton
+            android:id="@+id/btnPlayPauseFull"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/bg_play_circle_big"
+            android:padding="20dp"
+            android:src="@drawable/ic_play_white"
+            android:contentDescription="تشغيل" />
+
+        <ImageButton
+            android:id="@+id/btnNextFull"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_next"
+            android:contentDescription="التالي" />
+
+    </LinearLayout>
+
+</LinearLayout>
