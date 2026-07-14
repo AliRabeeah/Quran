@@ -57,8 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:progressTint="#1DB954"
-        android:thumbTint="#1DB954" />
+        android:progressTint="@color/primary"
+        android:thumbTint="@color/primary" />
 
     <LinearLayout
         android:layout_width="match_parent"
