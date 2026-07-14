@@ -1,10 +1,10 @@
 <resources>
-    <color name="background">#000000</color>
-    <color name="cardBackground">#000000</color>
-    <color name="primary">#D4AF37</color>
-    <color name="primaryText">#FFFFFF</color>
-    <color name="secondaryText">#B3B3B3</color>
-    <color name="gold">#D4AF37</color>
-    <color name="goldLight">#E8C468</color>
+    <color name="background">#FFFFFF</color>
+    <color name="cardBackground">#F7F5EE</color>
+    <color name="primary">#B8860B</color>
+    <color name="primaryText">#1A1A1A</color>
+    <color name="secondaryText">#6E6E6E</color>
+    <color name="gold">#B8860B</color>
+    <color name="goldLight">#D4AF37</color>
     <color name="launcher_bg">#000000</color>
 </resources>
