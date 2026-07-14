@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.TextView
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
     private lateinit var recycler: RecyclerView
     private lateinit var tvStatus: TextView
     private lateinit var btnDownloadAll: Button
+    private lateinit var etSearch: EditText
+    private lateinit var btnFavoritesFilter: ImageButton
 
     private lateinit var playerBar: View
     private lateinit var tvPlayerTitle: TextView
@@ -38,6 +43,8 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
     private val handler = Handler(Looper.getMainLooper())
 
     private var downloadAllQueue: MutableList<Surah> = mutableListOf()
+    private var favoritesOnly = false
+    private var searchQuery = ""
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
@@ -71,6 +78,9 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
         btnPlayerToggle = findViewById(R.id.btnPlayerToggle)
         seekBar = findViewById(R.id.seekBar)
         btnThemeToggle = findViewById(R.id.btnThemeToggle)
+        etSearch = findViewById(R.id.etSearch)
+        btnFavoritesFilter = findViewById(R.id.btnFavoritesFilter)
+
         btnThemeToggle.setOnClickListener { toggleTheme() }
         updateThemeIcon()
 
@@ -80,7 +90,8 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
         adapter = SurahAdapter(
             this,
             onPlayClick = { surah -> playSurah(surah) },
-            onDownloadClick = { surah -> downloadHelper.download(surah) }
+            onDownloadClick = { surah -> downloadHelper.download(surah) },
+            onFavoriteClick = { surah -> StorageHelper.toggleFavorite(this, surah) }
         )
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
@@ -88,6 +99,23 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
         btnDownloadAll.setOnClickListener { startDownloadAll() }
         btnPlayerToggle.setOnClickListener { playbackService?.togglePause() }
         playerBar.setOnClickListener { startActivity(Intent(this, PlayerActivity::class.java)) }
+
+        btnFavoritesFilter.setOnClickListener {
+            favoritesOnly = !favoritesOnly
+            btnFavoritesFilter.setImageResource(
+                if (favoritesOnly) R.drawable.ic_star_filled else R.drawable.ic_star_outline
+            )
+            applyFilters()
+        }
+
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchQuery = s?.toString() ?: ""
+                applyFilters()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -102,6 +130,22 @@ class MainActivity : AppCompatActivity(), DownloadHelper.Listener {
         bindService(intent, connection, Context.BIND_AUTO_CREATE)
 
         updateStatus()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyFilters()
+    }
+
+    private fun applyFilters() {
+        var list = QuranData.surahs.toList()
+        if (favoritesOnly) {
+            list = list.filter { StorageHelper.isFavorite(this, it) }
+        }
+        if (searchQuery.isNotBlank()) {
+            list = list.filter { it.arabicName.contains(searchQuery.trim()) }
+        }
+        adapter.updateList(list)
     }
 
     private fun updateStatus() {
